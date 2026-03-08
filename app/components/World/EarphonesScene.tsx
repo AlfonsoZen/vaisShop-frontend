@@ -21,6 +21,7 @@ function Model({ ...props }: any) {
         child.castShadow = true
         child.receiveShadow = true
         if (child.material instanceof THREE.MeshStandardMaterial) {
+          // Valores estéticos exactos de vaisShop
           child.material.envMapIntensity = 1.2
           child.material.metalness = 0.05
           child.material.roughness = 0.2
@@ -42,14 +43,22 @@ const EarphonesScene = () => {
         gl={{ 
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 0.8, // Calibrado para evitar el exceso de blanco
           alpha: true 
         }}
         onCreated={({ gl }) => {
           gl.shadowMap.type = THREE.PCFShadowMap
         }}
       >
-        <ambientLight intensity={0.4} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
+        {/* Luces ajustadas para mayor contraste y sombras profundas */}
+        <ambientLight intensity={0.3} />
+        <spotLight 
+          position={[10, 10, 10]} 
+          angle={0.15} 
+          penumbra={1} 
+          intensity={0.8} 
+          castShadow 
+        />
         
         <Suspense fallback={null}>
           <PresentationControls
@@ -65,14 +74,14 @@ const EarphonesScene = () => {
 
           <ContactShadows 
             position={[0, -0.75, 0]} 
-            opacity={0.35} 
+            opacity={0.45} // Sombra más profunda para mayor realismo
             scale={12} 
-            blur={3} 
+            blur={2.5} 
             far={4} 
             resolution={512}
           />
           
-          <Environment preset="studio" />
+          <Environment preset="studio" intensity={0.8} />
         </Suspense>
 
         <OrbitControls 
