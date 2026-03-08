@@ -1,5 +1,6 @@
 import type { Route } from "./+types/home";
 import EarphonesScene from "../components/World/EarphonesScene";
+import { ClientOnly } from "../components/ClientOnly";
 import { ShoppingBag, ArrowRight, Star } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
@@ -9,7 +10,23 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
+export async function loader({ request }: Route.LoaderArgs) {
+  // Aquí se implementará la llamada a la Shopify Storefront API
+  // Ejemplo de estructura según GEMINI.md:
+  /*
+  const response = await fetch(`https://${process.env.PUBLIC_STORE_DOMAIN}/api/${process.env.PUBLIC_STOREFRONT_API_VERSION}/graphql.json`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': process.env.PUBLIC_STOREFRONT_API_TOKEN!,
+    },
+    body: JSON.stringify({ query: '{ shop { name } }' }),
+  });
+  */
+  return { shopName: "VAIS Shop" };
+}
+
+export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <div className="min-h-screen bg-light font-sans selection:bg-accent/20 overflow-x-hidden">
       {/* Header Minimalista */}
@@ -57,7 +74,9 @@ export default function Home() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[80%] bg-accent/10 blur-[80px] lg:blur-[120px] rounded-full pointer-events-none -z-10"></div>
           
           <div className="w-full h-full flex items-center justify-center scale-100 lg:scale-100">
-            <EarphonesScene />
+            <ClientOnly fallback={<div className="h-full w-full bg-accent/5 animate-pulse rounded-3xl" />}>
+              <EarphonesScene />
+            </ClientOnly>
           </div>
         </div>
 

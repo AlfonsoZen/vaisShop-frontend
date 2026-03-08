@@ -1,9 +1,9 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
-import {
-  OrbitControls,
-  useGLTF,
-  Environment,
+import { 
+  OrbitControls, 
+  useGLTF, 
+  Environment, 
   ContactShadows,
   PresentationControls
 } from '@react-three/drei'
@@ -14,7 +14,7 @@ useGLTF.preload("/headphones_airpods_pro/scene.gltf")
 
 function Model({ ...props }: any) {
   const { scene } = useGLTF("/headphones_airpods_pro/scene.gltf")
-
+  
   useEffect(() => {
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
@@ -33,27 +33,25 @@ function Model({ ...props }: any) {
 }
 
 const EarphonesScene = () => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return <div className="h-full w-full" />;
-
   return (
     <div className="h-full w-full relative">
-      <Canvas
-        shadows
-        dpr={[1, 2]}
+      <Canvas 
+        shadows 
+        dpr={[1, 2]} 
         camera={{ position: [0, 0, 5], fov: 25 }}
-        gl={{
+        gl={{ 
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          alpha: true
+          alpha: true 
+        }}
+        onCreated={({ gl }) => {
+          gl.shadowMap.type = THREE.PCFShadowMap
         }}
       >
+        <ambientLight intensity={0.4} />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
+        
         <Suspense fallback={null}>
-          <ambientLight intensity={0.4} />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
-
           <PresentationControls
             global
             config={{ mass: 2, tension: 400 }}
@@ -65,24 +63,24 @@ const EarphonesScene = () => {
             <Model />
           </PresentationControls>
 
-          <ContactShadows
-            position={[0, -0.75, 0]}
-            opacity={0.35}
-            scale={12}
-            blur={3}
-            far={4}
+          <ContactShadows 
+            position={[0, -0.75, 0]} 
+            opacity={0.35} 
+            scale={12} 
+            blur={3} 
+            far={4} 
             resolution={512}
           />
-
+          
           <Environment preset="studio" />
         </Suspense>
 
-        <OrbitControls
-          makeDefault
-          enableZoom={false}
+        <OrbitControls 
+          makeDefault 
+          enableZoom={false} 
           enablePan={false}
-          autoRotate
-          autoRotateSpeed={0.8}
+          autoRotate 
+          autoRotateSpeed={0.8} 
           minPolarAngle={Math.PI / 2.5}
           maxPolarAngle={Math.PI / 2}
         />
