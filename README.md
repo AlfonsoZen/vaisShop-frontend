@@ -1,87 +1,49 @@
-# Welcome to React Router!
+# VAIS Shop - Frontend 🎧
 
-A modern, production-ready template for building full-stack React applications using React Router.
+VAIS es una plataforma de e-commerce de próxima generación con arquitectura **Headless**, diseñada para ofrecer una experiencia de "Comercio Experiencial". El núcleo de la interfaz es un visor 3D interactivo que permite a los usuarios explorar los "Hero Products" con una fidelidad visual y táctil superior.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## 🚀 Visión General
+Este proyecto es la implementación en **React Router v7** (SSR) del frontend de VAIS, optimizado para el despliegue en **Vercel** y la integración con la **Shopify Storefront API**.
 
-## Features
+## 🛠️ Stack Tecnológico
+- **Framework:** React Router v7 (con SSR habilitado).
+- **Core:** React 18.3.1 (Downgrade estratégico para estabilidad de R3F/PresentationControls).
+- **3D Engine:** Three.js + React Three Fiber (R3F) + @react-three/drei.
+- **Estilos:** Tailwind CSS v4.
+- **Iconos:** Lucide React.
+- **Despliegue:** Vercel (Serverless Functions + Edge CDN).
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## ✨ Características Principales
+- **Aislamiento 3D (Anti-SSR):** Implementación de un componente `<ClientOnly>` que garantiza que el motor WebGL solo se ejecute en el navegador, evitando errores 500 en el servidor.
+- **Experiencia Elástica:** Modelo 3D con comportamiento de "Snap Back" y controles elásticos mediante `PresentationControls` calibrados para máxima fluidez.
+- **Calibración Visual OEM:** Configuración de iluminación física, mapeo de tonos y sombras de contacto para una representación fiel de materiales metálicos y glossy.
+- **Shopify Ready:** Estructura de `loaders` preparada para consumir la Storefront API vía GraphQL.
 
-## Getting Started
+## 📦 Instalación y Desarrollo
 
-### Installation
+1. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-Install the dependencies:
+2. **Configurar variables de entorno:**
+   Copia el archivo `.env.example` a `.env` y añade tus credenciales de Shopify:
+   ```bash
+   cp .env.example .env
+   ```
 
-```bash
-npm install
-```
+3. **Iniciar servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
 
-### Development
+4. **Construir para producción:**
+   ```bash
+   npm run build
+   ```
 
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## 🌍 Despliegue en Vercel
+El proyecto está configurado para ser detectado automáticamente por Vercel como un proyecto de Remix/React Router. Asegúrate de que los `overrides` de React 18 se respeten durante la instalación en el pipeline de CI/CD.
 
 ---
-
-Built with ❤️ using React Router.
+Diseñado con ❤️ por **Alfonso Zendejas** para **VAIS**.
